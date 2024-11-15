@@ -1,7 +1,7 @@
 import { Form, NavLink, useRouteLoaderData } from "react-router-dom";
 
 import classes from "./MainNavigation.module.css";
-import NewsletterSignup from "./NewsletterSignup";
+// import NewsletterSignup from "./NewsletterSignup";
 
 function MainNavigation() {
   const token = useRouteLoaderData("root");
