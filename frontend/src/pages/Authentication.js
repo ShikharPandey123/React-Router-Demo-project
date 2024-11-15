@@ -22,13 +22,16 @@ export async function action({ request }) {
     password: data.get("password"),
   };
 
-  const response = await fetch("http://localhost:8080/" + mode, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(authData),
-  });
+  const response = await fetch(
+    "https://react-router-demo-project.onrender.com/" + mode,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(authData),
+    }
+  );
 
   if (response.status === 422 || response.status === 401) {
     return response;

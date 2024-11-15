@@ -81,12 +81,15 @@ export async function action({ params, request }) {
   const eventId = params.eventId;
 
   const token = getAuthToken();
-  const response = await fetch("http://localhost:8080/events/" + eventId, {
-    method: request.method,
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
+  const response = await fetch(
+    "https://react-router-demo-project.onrender.com/events/" + eventId,
+    {
+      method: request.method,
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
 
   if (!response.ok) {
     throw json(
