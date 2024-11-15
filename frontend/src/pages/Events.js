@@ -19,14 +19,10 @@ export default EventsPage;
 
 async function loadEvents() {
   const response = await fetch(
-    "https://react-router-demo-project.onrender.com"
+    "https://react-router-demo-project.onrender.com/events"
   );
 
   if (!response.ok) {
-    // return { isError: true, message: 'Could not fetch events.' };
-    // throw new Response(JSON.stringify({ message: 'Could not fetch events.' }), {
-    //   status: 500,
-    // });
     throw json(
       { message: "Could not fetch events." },
       {
