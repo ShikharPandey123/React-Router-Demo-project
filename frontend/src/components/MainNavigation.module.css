@@ -20,3 +20,30 @@
 .list a.active {
   color: var(--color-primary-800);
 }
+@media (max-width: 768px) {
+  .header {
+    padding: 1.5rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .list {
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  .list a {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem;
+  }
+
+  .list a {
+    font-size: 0.9rem;
+  }
+}

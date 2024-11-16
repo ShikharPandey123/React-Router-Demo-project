@@ -22,3 +22,32 @@
 .list a.active {
   background-color: var(--color-primary-600);
 }
+@media (max-width: 768px) {
+  .header {
+    padding: 1.5rem;
+    flex-direction: column;
+  }
+
+  .list {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .list a {
+    padding: 0.5rem 1rem;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem;
+  }
+
+    .list a {
+      font-size: 0.9rem;
+      padding: 0.4rem 0.8rem;
+    }
+    }

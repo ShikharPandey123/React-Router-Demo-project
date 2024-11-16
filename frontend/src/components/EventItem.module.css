@@ -30,3 +30,35 @@
   border: none;
   color: var(--color-primary-800);
 }
+@media (max-width: 768px) {
+  .event {
+    max-width: 100%;
+    margin: 1rem;
+  }
+
+  .event img {
+    width: 100%;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+    .actions a,
+    .actions button {
+      width: 100%;
+      padding: 0.5rem;
+    }
+    }
+  
+    @media (max-width: 480px) {
+      .event {
+        margin: 0.5rem;
+      }
+  
+      .actions a,
+      .actions button {
+        padding: 0.75rem;
+      }
+    }

@@ -16,3 +16,31 @@
   background-color: var(--color-primary-300);
   color: var(--color-gray-800);
 }
+@media (max-width: 768px) {
+  .newsletter {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .newsletter input,
+  .newsletter button {
+    width: 100%;
+    border-radius: 4px;
+  }
+
+  .newsletter button {
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .newsletter input {
+    min-width: 10rem;
+  }
+
+  .newsletter button {
+    font-size: 0.9rem;
+  }
+}
