@@ -12,12 +12,16 @@ import HomePage from "./pages/Home";
 import NewEventPage from "./pages/NewEvent";
 import RootLayout from "./pages/Root";
 import { action as manipulateEventAction } from "./components/EventForm";
-import NewsletterPage, { action as newsletterAction } from "./pages/Newsletter";
 import AuthenticationPage, {
   action as authAction,
 } from "./pages/Authentication";
 import { action as logoutAction } from "./pages/Logout";
 import { checkAuthLoader, tokenLoader } from "./util/auth";
+
+// New Imports
+import TasksPage from "./pages/TasksPage"; // Add TasksPage route
+import TaskStats from "./components/TaskStats"; // Add TaskStats route
+// import ConfirmDialog from "../components/ConfirmDialog"; // ConfirmDialog stays as a component
 
 const router = createBrowserRouter([
   {
@@ -69,13 +73,20 @@ const router = createBrowserRouter([
         action: authAction,
       },
       {
-        path: "newsletter",
-        element: <NewsletterPage />,
-        action: newsletterAction,
-      },
-      {
         path: "logout",
         action: logoutAction,
+      },
+
+      // New Routes for Task Management
+      {
+        path: "tasks", // Route for the task management page
+        element: <TasksPage />,
+        children: [
+          {
+            path: "stats", // Task Stats sub-route
+            element: <TaskStats />,
+          },
+        ],
       },
     ],
   },

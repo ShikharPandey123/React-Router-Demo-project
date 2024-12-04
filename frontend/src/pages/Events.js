@@ -1,17 +1,25 @@
 import { Suspense } from 'react';
 import { useLoaderData, json, defer, Await } from "react-router-dom";
-
 import EventsList from "../components/EventsList";
 
 function EventsPage() {
   const { events } = useLoaderData();
 
   return (
-    <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
-      <Await resolve={events}>
-        {(loadedEvents) => <EventsList events={loadedEvents} />}
-      </Await>
-    </Suspense>
+    <div
+      className="min-h-screen bg-cover bg-center bg-no-repeat flex flex-col"
+      style={{ backgroundImage: "url('/image2.jpg')" }}
+    >
+      <div className="bg-black bg-opacity-50 flex-grow flex items-center justify-center">
+        <Suspense
+          fallback={<p className="text-center text-white">Loading...</p>}
+        >
+          <Await resolve={events}>
+            {(loadedEvents) => <EventsList events={loadedEvents} />}
+          </Await>
+        </Suspense>
+      </div>
+    </div>
   );
 }
 
