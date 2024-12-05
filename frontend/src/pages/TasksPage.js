@@ -6,7 +6,6 @@ import {
   deleteTask,
   setFilter,
   setSearchQuery,
-  setPriority,
   reorderTasks,
   addTask,
   editTask,
@@ -27,15 +26,6 @@ const TasksPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState(null);
 
-  useEffect(() => {
-    const overdueTasks = tasks.filter(
-      (task) => new Date(task.dueDate) < new Date() && !task.completed
-    );
-    if (overdueTasks.length) {
-      toast.warning(`${overdueTasks.length} overdue task(s) detected!`);
-    }
-  }, [tasks]);
-
   const filteredTasks = tasks.filter((task) => {
     const isOverdue = new Date(task.dueDate) < new Date() && !task.completed;
     if (filter === "Completed" && !task.completed) return false;
@@ -49,9 +39,10 @@ const TasksPage = () => {
     return true;
   });
 
-  const handleTaskCompletion = (taskId) => {
+  const handleTaskCompletion = (taskId, completed) => {
     dispatch(toggleTask(taskId));
-    toast.success("Task status toggled!");
+    const status = completed ? "completed" : "pending";
+    toast.success(`Task marked as ${status}!`);
   };
 
   const handleDelete = (e, taskId) => {
@@ -88,7 +79,7 @@ const TasksPage = () => {
 
   return (
     <div
-      className="max-w-5xl mt-16 mx-auto p-8 rounded-lg shadow-xl text-white"
+      className="max-w-5xl mt-8 mx-auto px-4 sm:px-6 lg:px-8 rounded-lg shadow-xl text-white"
       style={{
         backgroundImage: "url('/image4.jpg')",
         backgroundSize: "cover",
@@ -97,7 +88,7 @@ const TasksPage = () => {
         minHeight: "100vh",
       }}
     >
-      <h1 className="text-4xl font-bold text-black text-center mb-8">
+      <h1 className="text-3xl sm:text-4xl font-bold text-black text-center mb-8">
         Task Manager Dashboard
       </h1>
 
@@ -105,10 +96,10 @@ const TasksPage = () => {
         <input
           type="text"
           placeholder="Search tasks..."
-          className="flex-grow p-3 border border-gray-700 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full sm:w-auto flex-grow p-3 border border-gray-700 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
           onChange={(e) => dispatch(setSearchQuery(e.target.value))}
         />
-        <div className="flex gap-2">
+        <div className="flex flex-wrap md:flex-nowrap items-center gap-2 ">
           {[
             "All",
             "Completed",
@@ -121,7 +112,7 @@ const TasksPage = () => {
             <button
               key={filterType}
               onClick={() => dispatch(setFilter(filterType))}
-              className="px-4 py-2 rounded-lg bg-purple-500 hover:bg-purple-600 focus:outline-none transform hover:scale-105 active:scale-95 transition-transform"
+              className="px-3 py-2 text-sm sm:text-base rounded-lg bg-purple-500 hover:bg-purple-600 focus:outline-none transform hover:scale-105 active:scale-95 transition-transform"
             >
               {filterType}
             </button>
@@ -164,33 +155,42 @@ const TasksPage = () => {
                 >
                   {(provided) => (
                     <li
-                      className="flex items-center justify-between p-4 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 cursor-pointer"
-                      onClick={() => handleTaskCompletion(task.id)}
+                      className="flex items-center justify-between gap-4 p-4 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow transform hover:scale-105 cursor-pointer"
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      <div className="flex flex-col">
-                        <span className="text-lg font-semibold">
-                          {task.title}
-                        </span>
-                        <span className="text-sm text-gray-400">
-                          {task.dueDate} - {task.priority}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-4">
+                      {/* Left Actions Section */}
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={task.completed}
+                          onChange={() =>
+                            handleTaskCompletion(task.id, !task.completed)
+                          }
+                          className="w-5 h-5 text-green-500 border-gray-300 rounded"
+                        />
                         <button
                           onClick={(e) => handleEditTask(e, task)}
-                          className="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none transform hover:scale-105 active:scale-95 transition-transform"
+                          className="px-2 py-1 sm:px-3 sm:py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none transform hover:scale-105 active:scale-95 transition-transform"
                         >
                           Edit
                         </button>
                         <button
                           onClick={(e) => handleDelete(e, task.id)}
-                          className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none transform hover:scale-105 active:scale-95 transition-transform"
+                          className="px-2 py-1 sm:px-3 sm:py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none transform hover:scale-105 active:scale-95 transition-transform"
                         >
                           Delete
                         </button>
+                      </div>
+
+                      <div className="text-right">
+                        <span className="text-base sm:text-lg font-semibold block">
+                          {task.title}
+                        </span>
+                        <span className="text-xs sm:text-sm text-gray-400">
+                          {task.dueDate} - {task.priority}
+                        </span>
                       </div>
                     </li>
                   )}

@@ -37,7 +37,6 @@ const TaskStats = () => {
   );
 };
 
-// Dummy function for weekly progress calculation
 const calculateWeeklyProgress = (tasks) => {
   const currentDate = new Date();
   const weekStartDate = new Date(
